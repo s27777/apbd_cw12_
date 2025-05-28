@@ -13,5 +13,22 @@ public class ClientController : ControllerBase
     {
         _dbService = dbService;
     }
-    
+
+    [HttpDelete("{idClient}")]
+    public async Task<IActionResult> DeleteClient(int idClient)
+    {
+        try
+        {
+            await _dbService.DeleteClientAsync(idClient);
+            return NoContent();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (InvalidOperationException e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
